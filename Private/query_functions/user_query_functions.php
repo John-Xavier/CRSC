@@ -9,12 +9,15 @@ function insert_user($user) {
   }
 
   $sql = "INSERT INTO user ";
-  $sql .= "(`user_name`, `email`, `age`, `role`) ";
+  $sql .= "(`Id`, `full_name`, `age`, `role`, `phone`, `email`, `password`) ";
   $sql .= "VALUES (";
-  $sql .= "'" . db_escape($db, $user['user_name']) . "',";
-  $sql .= "'" . db_escape($db, $user['email']) . "',";
+  $sql .= "'0',";
+  $sql .= "'" . db_escape($db, $user['full_name']) . "',";
   $sql .= "'" . db_escape($db, $user['age']) . "',";
-  $sql .= "'" . db_escape($db, $user['role']) . "'";
+  $sql .= "'" . db_escape($db, $user['role']) . "',";
+  $sql .= "'" . db_escape($db, $user['phone']) . "',";
+  $sql .= "'" . db_escape($db, $user['email']) . "',";
+  $sql .= "'" . db_escape($db, $user['password']) . "'";
   $sql .= ")";
   $result = mysqli_query($db, $sql);
   // For INSERT statements, $result is true/false
@@ -30,9 +33,9 @@ function insert_user($user) {
 function validate_user($user) {
   $errors = [];
 
-  if(is_blank($user['user_name'])) {
+  if(is_blank($user['full_name'])) {
     $errors[] = "Name cannot be blank.";
-  } elseif(!has_length($user['user_name'], ['min' => 2, 'max' => 255])) {
+  } elseif(!has_length($user['full_name'], ['min' => 2, 'max' => 255])) {
     $errors[] = "Name must be between 2 and 255 characters.";
   }
   if(is_blank($user['age'])) {
@@ -104,6 +107,33 @@ function update_user($user) {
       return true;
     } else {
       // UPDATE failed
+      echo mysqli_error($db);
+      db_disconnect($db);
+      exit;
+    }
+
+  }
+  function user_login($credentials){
+    global $db;
+    $sql = "SELECT * FROM user WHERE";
+     $sql .= "email='". db_escape($db, $credentials['email']) ."'";
+     $sql .= "AND password='". db_escape($db, $credentials['password']) ."'";
+     $result = mysqli_query($db, $sql);
+
+     confirm_result_set($result);
+     $user = mysqli_fetch_assoc($result);
+     
+     return $user;
+     if($result) {
+      if(mysqli_num_rows($result) == 1){
+
+        return $user;
+        
+    } else {
+        $error = "Invalid username or password";
+    }
+    mysqli_free_result($result);
+    } else {
       echo mysqli_error($db);
       db_disconnect($db);
       exit;

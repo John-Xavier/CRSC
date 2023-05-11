@@ -2,7 +2,7 @@
 require_once('../../../private/initialize.php');
 if(is_post_request()) {
     $user = [];
-    $user['user_name'] = $_POST['user_name'] ?? '';
+    $user['full_name'] = $_POST['full_name'] ?? '';
     $user['email'] = $_POST['email'] ?? '';
     $user['age'] = $_POST['age'] ?? '';
     $user['role'] = $_POST['role'] ?? '';
@@ -16,7 +16,7 @@ if(is_post_request()) {
   } else {
     // display the blank form
     $user = [];
-    $user["user_name"] = '';
+    $user["full_name"] = '';
     $user["email"] = '';
     $user["age"] = '';
     $user["role"] = '';
@@ -38,7 +38,7 @@ if(is_post_request()) {
                     User Name
                 </dt>
                 <dd>
-                    <input type="text" name="user_name"value="<?php echo h($user['user_name']);?>"/>
+                    <input type="text" name="full_name"value="<?php echo h($user['full_name']);?>"/>
                 </dd>
             </dl>
             <dl>
