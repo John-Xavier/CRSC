@@ -8,11 +8,14 @@ if(!isset($_GET['id'])) {
   if(is_post_request()) {
 
     // Handle form values sent by create.php
-  
+
     $gala = [];
     $gala['Id'] = $id;
     $gala['gala_name'] = $_POST['gala_name'] ?? '';
+    $gala['description'] = $_POST['description'] ?? '';
     $gala['date'] = $_POST['date'] ?? '';
+    $gala['time_to'] = $_POST['time_to'] ?? '';
+    $gala['time_from'] = $_POST['time_from'] ?? '';
   
     $result = update_gala($gala);
     if($result === true) {
@@ -56,8 +59,20 @@ if(!isset($_GET['id'])) {
           <dd><input type="text" name="gala_name" value="<?php echo h($gala['gala_name']); ?>" /></dd>
         </dl>
         <dl>
+          <dt>Description</dt>
+          <dd><input type="textarea" name="description" value="<?php echo h($gala['description']); ?>" rows="4" cols="50"/></dd>
+        </dl>
+        <dl>
           <dt>Date</dt>
           <dd><input type="text" name="date" value="<?php echo h($gala['date']); ?>" /></dd>
+        </dl>
+        <dl>
+          <dt>Time From</dt>
+          <dd><input type="text" name="time_from" value="<?php echo h($gala['time_from']); ?>" /></dd>
+        </dl>
+        <dl>
+          <dt>Time To</dt>
+          <dd><input type="text" name="time_to" value="<?php echo h($gala['time_to']); ?>" /></dd>
         </dl>
         <div id="operations">
           <input type="submit" value="Edit Gala" />
@@ -65,7 +80,7 @@ if(!isset($_GET['id'])) {
       </form>
   
     </div>
-  
+   
   </div>
   
   <?php include(SHARED_PATH . '/footer.php'); ?>

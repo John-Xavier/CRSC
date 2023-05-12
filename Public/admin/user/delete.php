@@ -19,7 +19,7 @@ if(is_post_request()){
     <div>
         <h1>Delete User</h1>
         <p>Are you sure you want to delete this user?</p>
-        <p class="item"><?php echo h($user['user_name']);?></p>
+        <p class="item"><?php echo h($user['full_name']);?></p>
         <form action="<?php echo url_for('/admin/user/delete.php?id=' . h(u($user['Id']))); ?>" method="post">
     <div id="operations">
         <input type="submit" name="commit" value="Delete User"/>

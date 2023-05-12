@@ -8,10 +8,14 @@
     }
 
     $sql = "INSERT INTO galas ";
-    $sql .= "(gala_name, date) ";
+    $sql .= "(`Id`, `gala_name`, `description`, `date`, `time_to`, `time_from`) ";
     $sql .= "VALUES (";
+    $sql .= "'0',";
     $sql .= "'" . db_escape($db, $gala['gala_name']) . "',";
-    $sql .= "'" . db_escape($db, $gala['date']) . "'";
+    $sql .= "'" . db_escape($db, $gala['description']) . "',";
+    $sql .= "'" . db_escape($db, $gala['date']) . "',";
+    $sql .= "'" . db_escape($db, $gala['time_to']) . "',";
+    $sql .= "'" . db_escape($db, $gala['time_from']) . "'";
     $sql .= ")";
     $result = mysqli_query($db, $sql);
     // For INSERT statements, $result is true/false
@@ -84,11 +88,14 @@
     if(!empty($errors)) {
       return $errors;
     }
-
+  
     $sql = "UPDATE galas SET ";
     $sql .= "Id='" . db_escape($db, $gala['Id']) . "', ";
     $sql .= "gala_name='" . db_escape($db, $gala['gala_name']) . "', ";
+    $sql .= "description='" . db_escape($db, $gala['description']) . "', ";
     $sql .= "date='" . db_escape($db, $gala['date']) . "', ";
+    $sql .= "time_to='" . db_escape($db, $gala['time_to']) . "', ";
+    $sql .= "time_from='" . db_escape($db, $gala['time_from']) . "' ";
     $sql .= "WHERE Id='" . db_escape($db, $gala['Id']) . "' ";
     $sql .= "LIMIT 1";
 

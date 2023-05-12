@@ -1,5 +1,5 @@
 <?php
-require_once('../../../private/initialize.php');
+require_once('../../private/initialize.php');
 session_start(); 
 if(isset($_POST['submit'])){
 
@@ -7,19 +7,21 @@ if(isset($_POST['submit'])){
     $password = $_POST['password'];
 
     $credentials = [];
-    $credentials['full_name'] = $_POST['full_name'] ?? '';
     $credentials['email'] = $_POST['email'] ?? '';
+    $credentials['password'] = $_POST['password'] ?? '';
 
     if(empty($username) || empty($password)){
         $error = "Please enter both username and password";
     } else {
 
         $user = user_login($credentials);
-        $_SESSION['user'] = $user;
-        redirect_to(url_for('dashboard.php'))
-
+        $_SESSION["user"] = $user;
+        echo('session is set');
+        redirect_to(url_for('dashboard.php?reg=s'));
     }
+    
 }
+$message = $_GET['reg'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,6 +29,9 @@ if(isset($_POST['submit'])){
     <title>Login</title>
 </head>
 <body>
+<?php if ($message == 's'){?>
+        <p style="color: green;"><?php echo 'registration is success'; ?></p>
+   <?php }?>
     <form method="post" action="">
         <label for="email">Email:</label>
         <input type="text" name="email" required><br>

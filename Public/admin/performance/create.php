@@ -43,10 +43,18 @@ if(is_post_request()) {
         <form action="<?php echo url_for('/admin/performance/create.php');?>" method="post">
             <dl>
                 <dt>
-                    user_id
+                    User
                 </dt>
                 <dd>
-                    <input type="text" name="user_id"value="<?php echo h($performance['user_id']);?>"/>
+                <?php
+                $result = find_all_users();
+                echo '<select name="user_id">';
+                while ($row = mysqli_fetch_assoc($result)) {
+                echo '<option value="' . $row['Id'] . '">' . $row['full_name'] . '</option>';
+                    }
+                echo '</select>';
+                ?>
+                   
                 </dd>
             </dl>
             <dl>

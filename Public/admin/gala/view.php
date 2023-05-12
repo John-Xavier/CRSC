@@ -25,8 +25,20 @@ $gala = find_gala_by_id($id);
         <dd><?php echo h($gala['gala_name']); ?></dd>
       </dl>
       <dl>
-        <dt>Date</dt>
+        <dt>Gala Description</dt>
+        <dd><?php echo h($gala['description']); ?></dd>
+      </dl>
+      <dl>
+        <dt>Gala Date</dt>
         <dd><?php echo h($gala['date']); ?></dd>
+      </dl>
+      <dl>
+        <dt>From</dt>
+        <dd><?php echo h($gala['time_from']); ?></dd>
+      </dl>
+      <dl>
+        <dt>To</dt>
+        <dd><?php echo h($gala['time_to']); ?></dd>
       </dl>
     </div>
 

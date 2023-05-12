@@ -4,7 +4,7 @@
 
 $id = $_GET['id'] ?? '1'; 
 
-$gala = find_user_by_id($id);
+$user = find_user_by_id($id);
 
 ?>
 
@@ -17,24 +17,28 @@ $gala = find_user_by_id($id);
 
   <div class="subject show">
 
-    <h1>User: <?php echo h($gala['user_name']); ?></h1>
+    <h1>User: <?php echo h($user['full_name']); ?></h1>
 
     <div class="attributes">
       <dl>
         <dt>Name</dt>
-        <dd><?php echo h($gala['user_name']); ?></dd>
+        <dd><?php echo h($user['full_name']); ?></dd>
+      </dl>
+      <dl>
+        <dt>Phone</dt>
+        <dd><?php echo h($user['phone']); ?></dd>
       </dl>
       <dl>
         <dt>email</dt>
-        <dd><?php echo h($gala['email']); ?></dd>
+        <dd><?php echo h($user['email']); ?></dd>
       </dl>
       <dl>
         <dt>Age</dt>
-        <dd><?php echo h($gala['age']); ?></dd>
+        <dd><?php echo h($user['age']); ?></dd>
       </dl>
       <dl>
         <dt>Role</dt>
-        <dd><?php echo h($gala['role']); ?></dd>
+        <dd><?php echo h($user['role']); ?></dd>
       </dl>
     </div>
 

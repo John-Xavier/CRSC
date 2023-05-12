@@ -36,7 +36,7 @@ $performance = find_performance_by_id($id);
                   <form action="<?php echo url_for('/admin/performance/view.php');?>" method="post">
                   <select name="compare_user_id">
                   <?php while($user = mysqli_fetch_array($user_set)){?>
-                 <option value="<?php echo $user['Id']; ?>"><?php echo $user['user_name']; ?></option>
+                 <option value="<?php echo $user['Id']; ?>"><?php echo $user['full_name']; ?></option>
                  <?php } ?>
                   </select>
                   <div id="operations">
@@ -50,7 +50,7 @@ $performance = find_performance_by_id($id);
           <td>
               <dl>
               <dt>User name</dt>
-              <dd><?php echo h($performance['user_name']); ?></dd>
+              <dd><?php echo h($performance['full_name']); ?></dd>
             </dl>
             <dl>
               <dt>BackStroke</dt>
@@ -83,7 +83,7 @@ $performance = find_performance_by_id($id);
               ?>
               <dl>
               <dt>User name</dt>
-              <dd><?php echo h($user_to_compare['user_name']); ?></dd>
+              <dd><?php echo h($user_to_compare['full_name']); ?></dd>
             </dl>
             <dl>
               <dt>BackStroke</dt>

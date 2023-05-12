@@ -18,6 +18,7 @@ function insert_performance($performance) {
   $sql .= "'" . db_escape($db, $performance['sidestroke']) . "',";
   $sql .= "'" . db_escape($db, $performance['week']) . "'";
   $sql .= ")";
+  echo $sql;
   $result = mysqli_query($db, $sql);
   // For INSERT statements, $result is true/false
   if($result) {
@@ -61,9 +62,9 @@ function find_all_performance() {
 }
 function find_performance_by_id($id) {
   global $db;
-//SELECT performance.*,user.user_name FROM performance,user WHERE performance.user_id = user.Id;
-  $sql = "SELECT performance.*,user.user_name FROM performance,user ";
-  $sql .= "WHERE performance.Id='" . db_escape($db, $id) . ",performance.user_id = user.Id'";
+//SELECT performance.*,user.full_name FROM performance,user WHERE performance.user_id = user.Id;
+  $sql = "SELECT performance.*,user.full_name FROM performance,user ";
+  $sql .= "WHERE performance.Id='" . db_escape($db, $id) . "'";
    echo $sql;
   $result = mysqli_query($db, $sql);
   confirm_result_set($result);
@@ -73,9 +74,9 @@ function find_performance_by_id($id) {
 }
 function find_performance_by_user_id_and_week($id,$week) {
   global $db;
-//SELECT performance.*,user.user_name FROM performance,user WHERE performance.user_id = user.Id;
-  $sql = "SELECT performance.*,user.user_name FROM performance,user ";
-  $sql .= "WHERE performance.user_id='" . db_escape($db, $id) . " AND performance.week=" . db_escape($db, $week) . " AND performance.user_id = user.Id'";
+//SELECT performance.*,user.full_name FROM performance,user WHERE performance.user_id = user.Id;
+  $sql = "SELECT performance.*,user.full_name FROM performance,user ";
+  $sql .= "WHERE performance.user_id='" . db_escape($db, $id) . "'AND performance.week='17" . db_escape($db, $week) . "'";
    echo $sql;
   $result = mysqli_query($db, $sql);
   confirm_result_set($result);

@@ -51,7 +51,7 @@ function find_all_users() {
 
   $sql = "SELECT * FROM user ";
   $sql .= "ORDER BY Id ASC";
-  echo $sql;
+ // echo $sql;
   $result = mysqli_query($db, $sql);
   confirm_result_set($result);
   return $result;
@@ -115,9 +115,9 @@ function update_user($user) {
   }
   function user_login($credentials){
     global $db;
-    $sql = "SELECT * FROM user WHERE";
-     $sql .= "email='". db_escape($db, $credentials['email']) ."'";
-     $sql .= "AND password='". db_escape($db, $credentials['password']) ."'";
+    $sql = "SELECT * FROM user WHERE ";
+     $sql .= "email='" . db_escape($db, $credentials['email']) . "' ";
+     $sql .= "AND password='" . db_escape($db, $credentials['password']) . "'";
      $result = mysqli_query($db, $sql);
 
      confirm_result_set($result);

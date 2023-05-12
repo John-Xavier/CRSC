@@ -22,7 +22,7 @@
                         <?php echo h($user['Id']);?>
                     </td>
                     <td>
-                        <?php echo h($user['user_name']);?>
+                        <?php echo h($user['full_name']);?>
                     </td>
                     <td>
                         <?php echo h($user['email']);?>

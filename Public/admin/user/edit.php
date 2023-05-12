@@ -15,6 +15,8 @@ if(!isset($_GET['id'])) {
     $user['age'] = $_POST['age'] ?? '';
     $user['role'] = $_POST['role'] ?? '';
     $user['email'] = $_POST['email'] ?? '';
+    $user['phone'] = $_POST['phone'] ?? '';
+  
   
     $result = update_user($user);
     if($result === true) {
@@ -50,7 +52,7 @@ if(!isset($_GET['id'])) {
       <form action="<?php echo url_for('/admin/user/edit.php?id=' . h(u($id))); ?>" method="post">
         <dl>
           <dt>User Name</dt>
-          <dd><input type="text" name="user_name" value="<?php echo h($user['user_name']); ?>" /></dd>
+          <dd><input type="text" name="full_name" value="<?php echo h($user['full_name']); ?>" /></dd>
         </dl>
         <dl>
           <dt>email</dt>
@@ -63,6 +65,10 @@ if(!isset($_GET['id'])) {
         <dl>
           <dt>Role</dt>
           <dd><input type="text" name="role" value="<?php echo h($user['role']); ?>" /></dd>
+        </dl>
+        <dl>
+          <dt>Phone</dt>
+          <dd><input type="text" name="phone" value="<?php echo h($user['phone']); ?>" /></dd>
         </dl>
         <div id="operations">
           <input type="submit" value="Edit User" />

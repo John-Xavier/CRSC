@@ -21,6 +21,7 @@ if(is_post_request()) {
     $user["age"] = '';
     $user["role"] = '';
   }
+  $roels = ['swimmer','parent','coach','admin']
 ?>
 <?php $page_title = 'Create User';?>
 <?php include(SHARED_PATH . '/header.php');?>

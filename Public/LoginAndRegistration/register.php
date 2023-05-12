@@ -7,8 +7,7 @@ require_once('../../private/initialize.php');?>
 </head>
 <body>
     <?php
-    if(isset($_POST['submit'])){
-        $message = "Registration successful";    
+    if(isset($_POST['submit'])){  
         $full_name = $_POST['full_name'];
         $password = $_POST['password'];
         $email = $_POST['email'];
@@ -27,8 +26,7 @@ require_once('../../private/initialize.php');?>
             $result = insert_user($user);
             if($result === true) {
                 $new_id = mysqli_insert_id($db);
-                redirect_to(url_for('/loginandregistration/login.php?registration=success'));
-                $message = "Registration successful";
+                redirect_to(url_for('/loginandregistration/login.php?reg=s'));
               } else {
                 $errors = $result;
               }
