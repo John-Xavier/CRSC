@@ -2,6 +2,7 @@
 <?php include(SHARED_PATH.'/header.php');?>
     <div id="content">
     <div>
+    <a href="<?php echo url_for("/loginandregistration/login.php");?>">Logout</a>
     <table class="list">
     <tr>
         <th>Main Menu</th>

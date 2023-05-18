@@ -13,7 +13,7 @@ if(is_post_request()) {
     $result = insert_gala($gala);
     if($result === true) {
       $new_id = mysqli_insert_id($db);
-      redirect_to(url_for('/staff/galas/view.php?id=' . $new_id));
+      redirect_to(url_for('/admin/gala/view.php?id=' . $new_id));
     } else {
       $errors = $result;
     }

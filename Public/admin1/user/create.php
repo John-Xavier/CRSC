@@ -9,7 +9,7 @@ if(is_post_request()) {
     $result = insert_user($user);
     if($result === true) {
         $new_id = mysqli_insert_id($db);
-        redirect_to(url_for('/staff/user/view.php?id=' . $new_id));
+        redirect_to(url_for('/admin/user/view.php?id=' . $new_id));
       } else {
         $errors = $result;
       }

@@ -6,7 +6,11 @@
 $id = $_GET['id'] ?? '1'; 
 
 $performance = find_performance_by_id($id);
-
+$performance_id = $performance['Id'];
+if(is_post_request()) {
+  echo $_POST['compare_user_id'];
+  $compare_id = $_POST['compare_user_id'] ?? '';
+$user_to_compare = find_performance_by_user_id_and_week($compare_id,$performance['week']);}
 ?>
 <?php
    $user_set = find_all_users(); 
@@ -75,10 +79,7 @@ $performance = find_performance_by_id($id);
         </td>
         <td>
         <?php 
-              if(is_post_request()) {
-                echo $_POST['compare_user_id'];
-                $compare_id = $_POST['compare_user_id'] ?? '';
-              $user_to_compare = find_performance_by_user_id_and_week($compare_id,$performance['week']);
+            
              
               ?>
               <dl>
@@ -105,9 +106,7 @@ $performance = find_performance_by_id($id);
               <dt>Week</dt>
               <dd><?php echo h($user_to_compare['week']); ?></dd>
             </dl>
-            <?php
-              }
-            ?>
+
         </td>
       </tr>
     </table>

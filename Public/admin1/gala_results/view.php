@@ -20,23 +20,21 @@ $gala_results = find_results_by_id($id);
     <h1>Gala Result: <?php echo h($gala_results['Id']); ?></h1>
     <div class="attributes">
       <dl>
-        <dt>Gala Id</dt>
-        <dd><?php echo h($gala_results['Id']); ?></dd>
-      </dl>
+
       <dl>
         <dt>Gala Name</dt>
-        <dd><?php echo h($gala_results['gala_id']); ?></dd>
+        <dd><?php echo h($gala_results['gala_name']); ?></dd>
       </dl>
       <dl>
-        <dt>Gala Name</dt>
-        <dd><?php echo h($gala_results['user_id']); ?></dd>
+        <dt>User Name</dt>
+        <dd><?php echo h($gala_results['full_name']); ?></dd>
       </dl>
       <dl>
-        <dt>Gala Name</dt>
+        <dt>Position</dt>
         <dd><?php echo h($gala_results['position']); ?></dd>
       </dl>
       <dl>
-        <dt>Date</dt>
+        <dt>Stroke</dt>
         <dd><?php echo h($gala_results['stroke']); ?></dd>
       </dl>
     </div>

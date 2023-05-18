@@ -23,31 +23,45 @@ if(is_post_request()) {
     $gala_results["stroke"] = '';
   }
 ?>
-<?php $page_title = 'Create Gala';?>
+<?php $page_title = 'Create Gala Results';?>
 <?php $strokes = array('Backstroke','Breaststroke','Butterfly','Sidestroke')?>
 <?php include(SHARED_PATH . '/header.php');?>
 
 <div id="content">
     <div>
         <h1>
-            Create Gala
+            Create Gala Results
         </h1>
         <?php echo display_errors($errors);?>
         <form action="<?php echo url_for('/admin/gala_results/create.php');?>" method="post">
             <dl>
                 <dt>
-                    Gala Id
+                    Gala
                 </dt>
                 <dd>
-                    <input type="text" name="gala_id"value="<?php echo h($gala_results['gala_id']);?>"/>
+                <?php
+                $result = find_all_galas();
+                echo '<select name="gala_id">';
+                while ($row = mysqli_fetch_assoc($result)) {
+                echo '<option value="' . $row['Id'] . '">' . $row['gala_name'] . '</option>';
+                }
+                echo '</select>';
+                ?>
                 </dd>
             </dl>
             <dl>
                 <dt>
-                    User Id
+                    User
                 </dt>
                 <dd>
-                    <input type="text" name="user_id"value="<?php echo h($gala_results['user_id']);?>"/>
+                    <?php
+                    $result = find_all_users();
+                    echo '<select name="user_id">';
+                    while ($row = mysqli_fetch_assoc($result)) {
+                    echo '<option value="' . $row['Id'] . '">' . $row['full_name'] . '</option>';
+                        }
+                    echo '</select>';
+                    ?>
                 </dd>
             </dl>
             <dl>

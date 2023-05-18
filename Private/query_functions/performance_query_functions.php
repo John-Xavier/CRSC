@@ -5,6 +5,7 @@ function insert_performance($performance) {
 
   $errors = validate_performance($performance);
   if(!empty($errors)) {
+    echo 'error from query func';
     return $errors;
   }
 
@@ -37,16 +38,16 @@ function validate_performance($performance) {
     $errors[] = "user_id cannot be blank.";
   }
   if(is_blank($performance['backstroke'])) {
-    $errors[] = "Stroke cannot be blank.";
+    $errors[] = "backstroke cannot be blank.";
   }
   if(is_blank($performance['breaststroke'])) {
-    $errors[] = "Stroke cannot be blank.";
+    $errors[] = "breaststroke cannot be blank.";
   }
   if(is_blank($performance['butterfly'])) {
-    $errors[] = "Stroke cannot be blank.";
+    $errors[] = "butterfly cannot be blank.";
   }
   if(is_blank($performance['week'])) {
-    $errors[] = "Stroke cannot be blank.";
+    $errors[] = "week cannot be blank.";
   }
   return $errors;
 }
@@ -76,7 +77,7 @@ function find_performance_by_user_id_and_week($id,$week) {
   global $db;
 //SELECT performance.*,user.full_name FROM performance,user WHERE performance.user_id = user.Id;
   $sql = "SELECT performance.*,user.full_name FROM performance,user ";
-  $sql .= "WHERE performance.user_id='" . db_escape($db, $id) . "'AND performance.week='17" . db_escape($db, $week) . "'";
+  $sql .= "WHERE performance.user_id='" . db_escape($db, $id) . "'AND performance.week='" . db_escape($db, $week) . "'";
    echo $sql;
   $result = mysqli_query($db, $sql);
   confirm_result_set($result);
@@ -84,12 +85,45 @@ function find_performance_by_user_id_and_week($id,$week) {
   mysqli_free_result($result);
   return $user;
 }
+function find_performance_by_week($week) {
+  global $db;
+//SELECT performance.*,user.full_name FROM performance,user WHERE performance.user_id = user.Id;
+  $sql = "SELECT performance.*,user.full_name FROM performance,user ";
+  $sql .= "WHERE performance.week='" . db_escape($db, $week). "'AND performance.user_id=user.Id";
+   echo $sql;
+  $result = mysqli_query($db, $sql);
+  confirm_result_set($result);
+  return $result;
+}
 function delete_performance($id) {
   global $db;
 
+ 
   $sql = "DELETE FROM performance ";
   $sql .= "WHERE Id='" . db_escape($db, $id) . "' ";
   $sql .= "LIMIT 1";
+ 
+  echo $sql;
+  $result = mysqli_query($db, $sql);
+
+  if($result) {
+    return true;
+  } else {
+    // DELETE failed
+    echo mysqli_error($db);
+    db_disconnect($db);
+    exit;
+  }
+}
+function delete_performance_with_user($id) {
+  global $db;
+
+ 
+  $sql = "DELETE FROM performance ";
+  $sql .= "WHERE user_id='" . db_escape($db, $id) . "'";
+
+ 
+  echo $sql;
   $result = mysqli_query($db, $sql);
 
   if($result) {
@@ -112,9 +146,9 @@ function update_performance($performance) {
     $sql .= "user_id='" . db_escape($db, $performance['user_id']) . "', ";
     $sql .= "backstroke='" . db_escape($db, $performance['backstroke']) . "', ";
     $sql .= "breaststroke='" . db_escape($db, $performance['breaststroke']) . "', ";
-    $sql .= "breaststroke='" . db_escape($db, $performance['butterfly']) . "', ";
-    $sql .= "breaststroke='" . db_escape($db, $performance['sidestroke']) . "', ";
-    $sql .= "butterfly='" . db_escape($db, $performance['week']) . "' ";
+    $sql .= "butterfly='" . db_escape($db, $performance['butterfly']) . "', ";
+    $sql .= "sidestroke='" . db_escape($db, $performance['sidestroke']) . "', ";
+    $sql .= "week='" . db_escape($db, $performance['week']) . "' ";
     $sql .= "WHERE Id='" . db_escape($db, $performance['Id']) . "' ";
     $sql .= "LIMIT 1";
 

@@ -95,12 +95,17 @@ function update_user($user) {
   
     $sql = "UPDATE user SET ";
     $sql .= "Id='" . db_escape($db, $user['Id']) . "', ";
-    $sql .= "user_name='" . db_escape($db, $user['user_name']) . "', ";
+    $sql .= "full_name='" . db_escape($db, $user['full_name']) . "', ";
     $sql .= "email='" . db_escape($db, $user['email']) . "', ";
-    $sql .= "age='" . db_escape($db, $user['age']) . "' ";
-    $sql .= "WHERE Id='" . db_escape($db, $user['role']) . "' ";
+    $sql .= "phone='" . db_escape($db, $user['phone']) . "', ";
+    $sql .= "password='" . db_escape($db, $user['password']) . "', ";
+    $sql .= "age='" . db_escape($db, $user['age']) . "', ";
+    if(isset($user['role'])){
+      $sql .= "role='" . db_escape($db, $user['role']) . "' ";
+    }
+    $sql .= "WHERE Id='" . db_escape($db, $user['Id']) . "' ";
     $sql .= "LIMIT 1";
-
+echo $sql;
     $result = mysqli_query($db, $sql);
     // For UPDATE statements, $result is true/false
     if($result) {
@@ -119,11 +124,10 @@ function update_user($user) {
      $sql .= "email='" . db_escape($db, $credentials['email']) . "' ";
      $sql .= "AND password='" . db_escape($db, $credentials['password']) . "'";
      $result = mysqli_query($db, $sql);
-
+//echo $sql;
      confirm_result_set($result);
      $user = mysqli_fetch_assoc($result);
      
-     return $user;
      if($result) {
       if(mysqli_num_rows($result) == 1){
 

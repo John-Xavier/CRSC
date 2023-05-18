@@ -18,6 +18,7 @@
     $sql .= "'" . db_escape($db, $gala['time_from']) . "'";
     $sql .= ")";
     $result = mysqli_query($db, $sql);
+   
     // For INSERT statements, $result is true/false
     if($result) {
       return true;
@@ -47,7 +48,7 @@
 
     $sql = "SELECT * FROM galas ";
     $sql .= "ORDER BY Id ASC";
-    echo $sql;
+    //echo $sql;
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
     return $result;
@@ -57,7 +58,7 @@
 
     $sql = "SELECT * FROM galas ";
     $sql .= "WHERE id='" . db_escape($db, $id) . "'";
-    // echo $sql;
+    echo $sql;
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
     $gala = mysqli_fetch_assoc($result);
@@ -70,6 +71,7 @@
     $sql = "DELETE FROM galas ";
     $sql .= "WHERE id='" . db_escape($db, $id) . "' ";
     $sql .= "LIMIT 1";
+    echo $sql;
     $result = mysqli_query($db, $sql);
 
     if($result) {
@@ -98,7 +100,7 @@
     $sql .= "time_from='" . db_escape($db, $gala['time_from']) . "' ";
     $sql .= "WHERE Id='" . db_escape($db, $gala['Id']) . "' ";
     $sql .= "LIMIT 1";
-
+echo $sql;
     $result = mysqli_query($db, $sql);
     // For UPDATE statements, $result is true/false
     if($result) {

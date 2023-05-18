@@ -11,7 +11,7 @@ if(!isset($_GET['id'])) {
   
     $user = [];
     $user['Id'] = $id;
-    $user['user_name'] = $_POST['user_name'] ?? '';
+    $user['full_name'] = $_POST['full_name'] ?? '';
     $user['age'] = $_POST['age'] ?? '';
     $user['role'] = $_POST['role'] ?? '';
     $user['email'] = $_POST['email'] ?? '';
