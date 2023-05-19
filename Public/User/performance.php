@@ -117,7 +117,9 @@ echo 'compare active';
 
      </form>
      </div>
-
+     <div class = "w3-container w3-padding">
+  <h2>Week <?php echo $week ?> Performance</h2>
+</div>
 
 <div class="w3-panel">
 <div class="w3-row-padding" style="margin:0 -16px">

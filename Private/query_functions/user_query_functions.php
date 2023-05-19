@@ -86,7 +86,7 @@ function search_for_user($name) {
   $sql = "SELECT * FROM user ";
   $sql .= "WHERE full_name LIKE '%" . $name . "%' ";
   $sql .= "ORDER BY Id ASC";
- echo $sql;
+//  echo $sql;
   $result = mysqli_query($db, $sql);
   confirm_result_set($result);
   return $result;
