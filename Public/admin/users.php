@@ -10,8 +10,17 @@
         }
 //get all gala names
 $user_set = find_all_users();
-$result_set = find_all_results();
 
+if(is_post_request()) {
+    $name = $_POST['search'];
+    if ($name == ''){
+        $user_set = find_all_users();
+    }else{
+        echo $name;
+        $user_set = search_for_user($name);
+    }
+    
+}
         ?>
         <!DOCTYPE html>
         <html>
@@ -26,14 +35,14 @@ $result_set = find_all_results();
         <body class="w3-light-grey">
 
     <!-- Top container -->
-    <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+    <!-- <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
     <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
     <span class="w3-bar-item w3-left">CRSC</span>
     <span class="w3-bar-item w3-right"><a href="<?php echo url_for("/loginandregistration/login.php");?>" class="w3-btn">  Logout</a>
 </span>
     </div>
     <div class="w3-panel w3-black">
-</div> 
+</div>  -->
 
     <!-- Sidebar/menu -->
     <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
@@ -71,6 +80,13 @@ $result_set = find_all_results();
 <div class = "w3-container">
     <td><a href="<?php echo url_for("admin/new_user.php");?>" class="w3-button w3-teal">New User <i class="fa fa-light fa-plus"></i></a></td>
 </div>
+<form action="<?php echo url_for('/admin/users.php'); ?>" method="post">
+<div class="w3-cell w3-padding">
+  <input class="w3-input" type="text" placeholder="Search.." name="search">
+  </div><div class="w3-cell w3-padding">
+  <button class="w3-btn w3-teal" type="submit"><i class="fa fa-search"></i></button>
+  </div>
+</form>
 <div class="w3-container">
 <div class="w3-panel">
     <div class="w3-row-padding" style="margin:0 -16px">

@@ -80,6 +80,18 @@ function find_all_users() {
   confirm_result_set($result);
   return $result;
 }
+
+function search_for_user($name) {
+  global $db;
+  $sql = "SELECT * FROM user ";
+  $sql .= "WHERE full_name LIKE '%" . $name . "%' ";
+  $sql .= "ORDER BY Id ASC";
+ echo $sql;
+  $result = mysqli_query($db, $sql);
+  confirm_result_set($result);
+  return $result;
+}
+
 function find_user_by_id($id) {
   global $db;
 
