@@ -8,19 +8,26 @@
     }else{
         echo('session is not set');
     }
-
+$user_id = $user['Id'];
 $week = '1';
+
     if(is_post_request()) {
         $week = $_POST['week'];
-      $performance_set = find_performance_by_week($week);
-      if (!isset($performance_set)){
+        $user_id = $_POST['user_id'];
+        $compare_id = $_POST['compare_id'];
+      $performance = find_performance_by_user_id_and_week($user_id,$week);
+      echo 'compare Id:' . $compare_id;
+      $performance_compare = find_performance_by_user_id_and_week($compare_id,$week);
+
+      if (!isset($performance)){
         echo 'no performance data available';
       }
+     
 
 
   }else{
 
-      $performance_set = find_performance_by_week($week);
+      $performance = find_performance_by_user_id_and_week($user_id,$week);
   }
   
 
@@ -61,11 +68,11 @@ $week = '1';
     <h5>Dashboard</h5>
   </div>
   <div class="w3-bar-block">
-    <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-    <a href="<?php echo url_for("coach/performance.php");?>" class="w3-bar-item w3-button w3-padding w3-teal"><i class="fa fa-dashboard"></i>  Performance</a>
-    <a href="<?php echo url_for("coach/users.php");?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Users</a>
-    <a href="<?php echo url_for("coach/galas.php");?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-solid fa-trophy"></i></i>  Galas</a>
-  </div>
+        <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+        <a href="<?php echo url_for("user/performance.php?id=".$user['Id']);?>" class="w3-bar-item w3-button w3-padding w3-teal"><i class="fa fa-dashboard fa-fw"></i>  Performance</a>
+        <a href="<?php echo url_for("user/profile.php?id=".$user['Id']);?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw"></i>  Profile</a>
+        <a href="<?php echo url_for("user/galas.php?id=".$user['Id']);?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-trophy fa-fw"></i>  All Galas</a>
+    </div>
 </nav>
 
 
@@ -77,14 +84,11 @@ $week = '1';
 
   <!-- Header -->
   <header class="w3-container" style="padding-top:22px">
-    <h5><b><i class="fa fa-dashboard"></i> Performance</b></h5>
+    <h5><b><i class="fa fa-dashboard"></i> Compare Performance</b></h5>
   </header>
-  <div class="w3-container w3-padding">
-<a href="<?php echo url_for("/coach/add_performance.php");?>" class="w3-button w3-teal">Add Performance <i class="fa fa-light fa-plus"></i></a>
-
-</div>
+  
   <div class="w3-container">
-  <form action="<?php echo url_for('/coach/performance.php');?>" method="post">
+  <form action="<?php echo url_for('/user/compare.php');?>" method="post">
   <div class="w3-container w3-cell w3-cell-middle  w3-padding">
   <select class="w3-select" name="week">
   <option value="1">Week 1</option>
@@ -100,7 +104,16 @@ $week = '1';
     </select>
     </div>
     <input type="hidden" name="user_id" value="<?php echo h($user_id); ?>" />
-
+    <div class="w3-container w3-cell w3-cell-middle  w3-padding">
+    <?php
+                        $result = find_all_users();
+                        echo '<select class="w3-select" name="compare_id">';
+                        while ($row = mysqli_fetch_assoc($result)) {
+                        echo '<option value="' . $row['Id'] . '">' . $row['full_name'] . '</option>';
+                            }
+                        echo '</select>';
+                        ?>
+                        </div>
     <div class="w3-container w3-cell w3-cell-middle  w3-padding">
     <input class="w3-btn w3-teal" type="submit" value="Go"/>
     </div>
@@ -113,33 +126,73 @@ $week = '1';
 <div class="w3-row-padding" style="margin:0 -16px">
 <div class="w3-twothird">
 <table class="w3-table-all">
+  <?php if(isset($performance['full_name'])){?>
 <tr>
-<th>User Name</th>
-<th>BackStroke</th>
-<th>Breaststroke</th>
-<th>Butterfly</th>
-<th>Sidestroke</th>
-<th>&nbsp;</th>
-<th>&nbsp;</th>
+  <th>User Name</th>
+  <td><?php echo h($performance['full_name']); ?></td>
+
+ <td><?php if(isset($performance_compare)){echo h($performance_compare['full_name']); }?></td>
+
+  
 </tr>
-<?php while($performance = mysqli_fetch_assoc($performance_set)){?>
-     <tr>
-    <td><?php echo h($performance['full_name']); ?></td>
-    <td><?php echo h($performance['backstroke']); ?></td>
-    <td><?php echo h($performance['breaststroke']); ?></td>
-    <td><?php echo h($performance['butterfly']); ?></td>
-    <td><?php echo h($performance['sidestroke']); ?></td>
-    <td><a href="<?php echo url_for("coach/edit_performance.php?id=".$performance['Id']);?>" class="w3-button w3-teal">Edit</a></td>
-    <td><a href="<?php echo url_for("coach/delete_performance.php?id=".$performance['Id']);?>" class="w3-button w3-red">Delete</a></td>
-    
-</td>
-    </tr>
-    <?php } ?>
+<tr>
+  <th>BackStroke</th>
+  <td><?php echo h($performance['backstroke']); ?></td>
+  <td><?php if(isset($performance_compare)){echo h($performance_compare['backstroke']); }?></td>
+</tr>
+<tr>
+  <th>Breaststroke</th>
+  <td><?php echo h($performance['breaststroke']); ?></td>
+  <td><?php if(isset($performance_compare)){echo h($performance_compare['breaststroke']); }?></td>
+</tr>
+<tr>
+  <th>Butterfly</th>
+  <td><?php echo h($performance['butterfly']); ?></td>
+  <td><?php if(isset($performance_compare)){echo h($performance_compare['butterfly']); }?></td>
+</tr>
+<tr>
+  <th>Sidestroke</th>
+  <td><?php echo h($performance['sidestroke']); ?></td>
+  <td><?php if(isset($performance_compare)){echo h($performance_compare['sidestroke']); }?></td>
+</tr>
+<?php }else{
+  ?>
+  <tr>
+  <th>No Data to display</th>
+</tr>
+ 
+  <?php
+}?>
 </table>
 </div>
 </div>
 </div>
-<div class="w3-container w3-dark-grey w3-padding-32">
+
+  <div class="w3-container w3-dark-grey w3-padding-32">
+    <div class="w3-row">
+      <div class="w3-container w3-third">
+        <h5 class="w3-bottombar w3-border-green">Demographic</h5>
+        <p>Language</p>
+        <p>Country</p>
+        <p>City</p>
+      </div>
+      <div class="w3-container w3-third">
+        <h5 class="w3-bottombar w3-border-red">System</h5>
+        <p>Browser</p>
+        <p>OS</p>
+        <p>More</p>
+      </div>
+      <div class="w3-container w3-third">
+        <h5 class="w3-bottombar w3-border-orange">Target</h5>
+        <p>Users</p>
+        <p>Active</p>
+        <p>Geo</p>
+        <p>Interests</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="w3-container w3-dark-grey w3-padding-32">
        
        </div>
    
@@ -147,6 +200,7 @@ $week = '1';
        <footer class="w3-container w3-padding-16 w3-light-grey">
            <p>Copyrights Reserved College Road Swimming Club 2023</p>
        </footer>
+
   <!-- End page content -->
 </div>
 

@@ -8,19 +8,17 @@
     }else{
         echo('session is not set');
     }
-
+$user_id = $user['Id'];
 $week = '1';
+$children = find_all_children($user_id);
+$performance_array = array();
     if(is_post_request()) {
         $week = $_POST['week'];
-      $performance_set = find_performance_by_week($week);
-      if (!isset($performance_set)){
-        echo 'no performance data available';
-      }
-
-
+        $user_id = $_POST['user_id'];
+        $children = find_all_children($user_id);
   }else{
-
-      $performance_set = find_performance_by_week($week);
+   
+      
   }
   
 
@@ -62,9 +60,9 @@ $week = '1';
   </div>
   <div class="w3-bar-block">
     <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-    <a href="<?php echo url_for("coach/performance.php");?>" class="w3-bar-item w3-button w3-padding w3-teal"><i class="fa fa-dashboard"></i>  Performance</a>
-    <a href="<?php echo url_for("coach/users.php");?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Users</a>
-    <a href="<?php echo url_for("coach/galas.php");?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-solid fa-trophy"></i></i>  Galas</a>
+    <a href="<?php echo url_for("parent/performance.php");?>" class="w3-bar-item w3-button w3-padding  w3-teal"><i class="fa fa-dashboard"></i>  Performance</a>
+    <a href="<?php echo url_for("parent/children.php");?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Children</a>
+    <a href="<?php echo url_for("parent/galas.php");?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-solid fa-trophy"></i></i>  Galas</a>
   </div>
 </nav>
 
@@ -79,12 +77,9 @@ $week = '1';
   <header class="w3-container" style="padding-top:22px">
     <h5><b><i class="fa fa-dashboard"></i> Performance</b></h5>
   </header>
-  <div class="w3-container w3-padding">
-<a href="<?php echo url_for("/coach/add_performance.php");?>" class="w3-button w3-teal">Add Performance <i class="fa fa-light fa-plus"></i></a>
-
-</div>
+  
   <div class="w3-container">
-  <form action="<?php echo url_for('/coach/performance.php');?>" method="post">
+  <form action="<?php echo url_for('/parent/performance.php');?>" method="post">
   <div class="w3-container w3-cell w3-cell-middle  w3-padding">
   <select class="w3-select" name="week">
   <option value="1">Week 1</option>
@@ -112,33 +107,48 @@ $week = '1';
 <div class="w3-panel">
 <div class="w3-row-padding" style="margin:0 -16px">
 <div class="w3-twothird">
+<?php while($child = mysqli_fetch_assoc($children)){
+    $child_id = $child['child_id'];
+    $performance = find_performance_by_user_id_and_week($child_id,$week);
+    ?>
 <table class="w3-table-all">
+  <?php if(isset($performance['full_name'])){?>
 <tr>
-<th>User Name</th>
-<th>BackStroke</th>
-<th>Breaststroke</th>
-<th>Butterfly</th>
-<th>Sidestroke</th>
-<th>&nbsp;</th>
-<th>&nbsp;</th>
+  <th>User Name</th>
+  <td><?php echo h($performance['full_name']); ?></td>
+
 </tr>
-<?php while($performance = mysqli_fetch_assoc($performance_set)){?>
-     <tr>
-    <td><?php echo h($performance['full_name']); ?></td>
-    <td><?php echo h($performance['backstroke']); ?></td>
-    <td><?php echo h($performance['breaststroke']); ?></td>
-    <td><?php echo h($performance['butterfly']); ?></td>
-    <td><?php echo h($performance['sidestroke']); ?></td>
-    <td><a href="<?php echo url_for("coach/edit_performance.php?id=".$performance['Id']);?>" class="w3-button w3-teal">Edit</a></td>
-    <td><a href="<?php echo url_for("coach/delete_performance.php?id=".$performance['Id']);?>" class="w3-button w3-red">Delete</a></td>
-    
-</td>
-    </tr>
-    <?php } ?>
+<tr>
+  <th>BackStroke</th>
+  <td><?php echo h($performance['backstroke']); ?></td>
+</tr>
+<tr>
+  <th>Breaststroke</th>
+  <td><?php echo h($performance['breaststroke']); ?></td>
+</tr>
+<tr>
+  <th>Butterfly</th>
+  <td><?php echo h($performance['butterfly']); ?></td>
+</tr>
+<tr>
+  <th>Sidestroke</th>
+  <td><?php echo h($performance['sidestroke']); ?></td>
+</tr>
+<?php }else{
+  ?>
+  <tr>
+  <th>No Data to display</th>
+</tr>
+ 
+  <?php
+}?>
 </table>
+<?php } ?>
 </div>
 </div>
 </div>
+<div class="w3-container w3-padding">
+
 <div class="w3-container w3-dark-grey w3-padding-32">
        
        </div>

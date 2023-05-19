@@ -49,10 +49,14 @@
             <body class="w3-light-grey">
 
         <!-- Top container -->
-    <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
-        <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
-        <span class="w3-bar-item w3-right">CRSC</span>
-        </div>
+        <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+    <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+    <span class="w3-bar-item w3-left">CRSC</span>
+    <span class="w3-bar-item w3-right"><a href="<?php echo url_for("/loginandregistration/login.php");?>" class="w3-btn">  Logout</a>
+</span>
+    </div>
+    <div class="w3-panel w3-black">
+</div> 
 
         <!-- Sidebar/menu -->
         <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
@@ -111,10 +115,10 @@
     </div>
     <div class="w3-padding">
 
-    <label>User : </label>
+    <label>User </label>
     <?php
                         $result = find_all_users();
-                        echo '<select name="user_id">';
+                        echo '<select class="w3-select" name="user_id">';
                         while ($row = mysqli_fetch_assoc($result)) {
                         echo '<option value="' . $row['Id'] . '">' . $row['full_name'] . '</option>';
                             }
@@ -127,35 +131,14 @@
         
 
         
-        <div class="w3-container w3-dark-grey w3-padding-32">
-            <div class="w3-row">
-            <div class="w3-container w3-third">
-                <h5 class="w3-bottombar w3-border-green">Demographic</h5>
-                <p>Language</p>
-                <p>Country</p>
-                <p>City</p>
-            </div>
-            <div class="w3-container w3-third">
-                <h5 class="w3-bottombar w3-border-red">System</h5>
-                <p>Browser</p>
-                <p>OS</p>
-                <p>More</p>
-            </div>
-            <div class="w3-container w3-third">
-                <h5 class="w3-bottombar w3-border-orange">Target</h5>
-                <p>Users</p>
-                <p>Active</p>
-                <p>Geo</p>
-                <p>Interests</p>
-            </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <footer class="w3-container w3-padding-16 w3-light-grey">
-            <h4>FOOTER</h4>
-            <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-        </footer>
+    <div class="w3-container w3-dark-grey w3-padding-32">
+       
+       </div>
+   
+       <!-- Footer -->
+       <footer class="w3-container w3-padding-16 w3-light-grey">
+           <p>Copyrights Reserved College Road Swimming Club 2023</p>
+       </footer>
 
         <!-- End page content -->
         </div>

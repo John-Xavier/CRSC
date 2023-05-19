@@ -10,12 +10,24 @@
     }
 $user_id = $user['Id'];
 $week = '1';
+$compare_active = false;
     if(is_post_request()) {
         $week = $_POST['week'];
         $user_id = $_POST['user_id'];
+        
       $performance = find_performance_by_user_id_and_week($user_id,$week);
       if (!isset($performance)){
         echo 'no performance data available';
+      }
+      if (isset($_POST['compare_id'])){
+        $compare_id = $_POST['compare_id'];
+        $performance_compare = find_performance_by_user_id_and_week($compare_id,$week);
+        if(isset($performance_compare['Id'])){
+          $compare_active = true;
+echo 'compare active';
+        }else{
+          $compare_active = false;
+        }
       }
 
 
@@ -42,9 +54,13 @@ $week = '1';
 
 <!-- Top container -->
 <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
-  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
-  <span class="w3-bar-item w3-right">CRSC</span>
-</div>
+    <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+    <span class="w3-bar-item w3-left">CRSC</span>
+    <span class="w3-bar-item w3-right"><a href="<?php echo url_for("/loginandregistration/login.php");?>" class="w3-btn">  Logout</a>
+</span>
+    </div>
+    <div class="w3-panel w3-black">
+</div> 
 
 <!-- Sidebar/menu -->
 <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
@@ -76,15 +92,21 @@ $week = '1';
   <header class="w3-container" style="padding-top:22px">
     <h5><b><i class="fa fa-dashboard"></i> My Performance</b></h5>
   </header>
+  
   <div class="w3-container">
   <form action="<?php echo url_for('/user/performance.php');?>" method="post">
   <div class="w3-container w3-cell w3-cell-middle  w3-padding">
-  <select name="week">
+  <select class="w3-select" name="week">
   <option value="1">Week 1</option>
   <option value="2">Week 2</option>
   <option value="3">Week 3</option>
   <option value="4">Week 4</option>
-  <option value="12">Week 12</option>
+  <option value="5">Week 5</option>
+  <option value="6">Week 6</option>
+  <option value="7">Week 7</option>
+  <option value="8">Week 8</option>
+  <option value="9">Week 9</option>
+  <option value="10">Week 10</option>
     </select>
     </div>
     <input type="hidden" name="user_id" value="<?php echo h($user_id); ?>" />
@@ -105,7 +127,7 @@ $week = '1';
 <tr>
   <th>User Name</th>
   <td><?php echo h($performance['full_name']); ?></td>
-  
+
 </tr>
 <tr>
   <th>BackStroke</th>
@@ -135,6 +157,10 @@ $week = '1';
 </div>
 </div>
 </div>
+<div class="w3-container w3-padding">
+<a href="<?php echo url_for("user/compare.php?id=".$user['Id']);?>" class="w3-button w3-teal">Compare</a>
+
+</div>
   <div class="w3-container w3-dark-grey w3-padding-32">
     <div class="w3-row">
       <div class="w3-container w3-third">
@@ -159,11 +185,14 @@ $week = '1';
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="w3-container w3-padding-16 w3-light-grey">
-    <h4>FOOTER</h4>
-    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-  </footer>
+  <div class="w3-container w3-dark-grey w3-padding-32">
+       
+       </div>
+   
+       <!-- Footer -->
+       <footer class="w3-container w3-padding-16 w3-light-grey">
+           <p>Copyrights Reserved College Road Swimming Club 2023</p>
+       </footer>
 
   <!-- End page content -->
 </div>

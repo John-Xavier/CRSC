@@ -19,7 +19,7 @@ function insert_performance($performance) {
   $sql .= "'" . db_escape($db, $performance['sidestroke']) . "',";
   $sql .= "'" . db_escape($db, $performance['week']) . "'";
   $sql .= ")";
-  echo $sql;
+  //echo $sql;
   $result = mysqli_query($db, $sql);
   // For INSERT statements, $result is true/false
   if($result) {
@@ -56,7 +56,7 @@ function find_all_performance() {
 
   $sql = "SELECT * FROM performance ";
   $sql .= "ORDER BY Id ASC";
-  echo $sql;
+  //echo $sql;
   $result = mysqli_query($db, $sql);
   confirm_result_set($result);
   return $result;
@@ -66,7 +66,7 @@ function find_performance_by_id($id) {
 //SELECT performance.*,user.full_name FROM performance,user WHERE performance.user_id = user.Id;
   $sql = "SELECT performance.*,user.full_name FROM performance,user ";
   $sql .= "WHERE performance.Id='" . db_escape($db, $id) . "'";
-   echo $sql;
+   //echo $sql;
   $result = mysqli_query($db, $sql);
   confirm_result_set($result);
   $user = mysqli_fetch_assoc($result);
@@ -77,8 +77,8 @@ function find_performance_by_user_id_and_week($id,$week) {
   global $db;
 //SELECT performance.*,user.full_name FROM performance,user WHERE performance.user_id = user.Id;
   $sql = "SELECT performance.*,user.full_name FROM performance,user ";
-  $sql .= "WHERE performance.user_id='" . db_escape($db, $id) . "'AND performance.week='" . db_escape($db, $week) . "'";
-   echo $sql;
+  $sql .= "WHERE performance.user_id='" . db_escape($db, $id) . "'AND performance.week='" . db_escape($db, $week) ."'AND performance.user_id=user.Id";
+   //echo $sql;
   $result = mysqli_query($db, $sql);
   confirm_result_set($result);
   $user = mysqli_fetch_assoc($result);
@@ -90,7 +90,7 @@ function find_performance_by_week($week) {
 //SELECT performance.*,user.full_name FROM performance,user WHERE performance.user_id = user.Id;
   $sql = "SELECT performance.*,user.full_name FROM performance,user ";
   $sql .= "WHERE performance.week='" . db_escape($db, $week). "'AND performance.user_id=user.Id";
-   echo $sql;
+   //echo $sql;
   $result = mysqli_query($db, $sql);
   confirm_result_set($result);
   return $result;
@@ -103,7 +103,7 @@ function delete_performance($id) {
   $sql .= "WHERE Id='" . db_escape($db, $id) . "' ";
   $sql .= "LIMIT 1";
  
-  echo $sql;
+  //echo $sql;
   $result = mysqli_query($db, $sql);
 
   if($result) {
@@ -123,7 +123,7 @@ function delete_performance_with_user($id) {
   $sql .= "WHERE user_id='" . db_escape($db, $id) . "'";
 
  
-  echo $sql;
+  //echo $sql;
   $result = mysqli_query($db, $sql);
 
   if($result) {

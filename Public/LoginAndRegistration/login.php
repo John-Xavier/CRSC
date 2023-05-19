@@ -28,12 +28,20 @@ if(isset($_POST['submit'])){
             }elseif($userRole == 'coach'){
     //coach
                 redirect_to(url_for('coach/performance.php?reg=s'));
-            }else{
+            }elseif($userRole == 'parent'){
+                redirect_to(url_for('parent/performance.php'));
+            }
+            else{
                 echo 'Invalid User';
             }
         
         } else{
-            echo 'error : ' . $user;
+            if (isset($user[0])){
+                echo 'error : ' . $user[0];
+            }else{
+                echo 'Invalid username or password';
+            }
+            
         }
         
     }
@@ -82,23 +90,28 @@ $message = $_GET['reg'];
       </dl>
      
             <div class="w3-container">
-            <div class="w3-padding w3-display-middle-bottom">
+            <div class="w3-padding w3-cell">
         <input class="w3-btn w3-teal" type="submit" name="submit" value="Login">
         </div>
+        <div class="w3-padding w3-cell">
+
+   
+<a class="w3-btn" href="<?php echo url_for("/loginandregistration/register.php");?>">Sign Up</a>
+
+</div>
         </div>
     
       
 
     </form>
     </div>
-    <dl>
-        <dt> <a href="<?php echo url_for("/loginandregistration/register.php");?>">Sign Up</a></dt>
-      
-      </dl>
-   
-    </div>
-    </div>
+    
 
+    
+    </div>
+    
+    </div>
+    
 </body>
 </html>
 <?php

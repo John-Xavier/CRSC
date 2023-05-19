@@ -9,7 +9,6 @@
                         echo('session is not set');
                     }
                     $gala_id = $_GET["id"];
-                    $stroke = "backstroke";
             //get all gala names
         $gala_name = "";
             $stroke_name = "BackStroke";
@@ -79,9 +78,9 @@
                 </div>
                 <div class="w3-bar-block">
     <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-    <a href="<?php echo url_for("admin/performance.php");?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-dashboard"></i>  Performance</a>
-    <a href="<?php echo url_for("admin/users.php");?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Users</a>
-    <a href="<?php echo url_for("admin/galas.php");?>" class="w3-bar-item w3-button w3-padding  w3-teal"><i class="fa fa-solid fa-trophy"></i></i>  Galas</a>
+    <a href="<?php echo url_for("parent/performance.php");?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-dashboard"></i>  Performance</a>
+    <a href="<?php echo url_for("parent/children.php");?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Children</a>
+    <a href="<?php echo url_for("parent/galas.php");?>" class="w3-bar-item w3-button w3-padding  w3-teal"><i class="fa fa-solid fa-trophy"></i></i>  Galas</a>
   </div>
                 </nav>
 
@@ -94,15 +93,12 @@
 
                 <!-- Header -->
                 <header class="w3-container" style="padding-top:22px">
-                    <h5><b><i class="fa fa-trophy"></i> Edit Results</b></h5>
+                    <h5><b><i class="fa fa-trophy"></i> Galas</b></h5>
                 </header>
-                <div class = "w3-container">
-    <a href="<?php echo url_for("admin/add_results.php?gala_id=". $gala_id ."&stroke=". $stroke);?>" class="w3-button w3-teal">Add New Entry <i class="fa fa-light fa-plus"></i></a>
-</div>
                 <div class="w3-container">
                 <h1><?php echo $gala_name .' '. $stroke_name; ?></h1>
                 
-                <form action="<?php echo url_for('admin/gala_results.php?id='.$gala_id);?>" method="post">
+                <form action="<?php echo url_for('parent/gala_results.php');?>" method="post">
 
                 <div class="w3-container w3-cell w3-cell-middle  w3-padding">
             <select class="w3-select" name="stroke">
@@ -130,14 +126,12 @@
                 <th>Name</th>
                 <th>Position</th>
                 <th>Time</th>
-                <th>&nbsp;</th>
                 </tr>
                 <?php while($result = mysqli_fetch_assoc($gala_results)){?>
                 <tr>
                 <td><?php echo h($result['full_name']); ?></td>
                 <td><?php echo h($result['position']); ?></td>
                 <td><?php echo h($result['time']); ?></td>
-                <td><a href="<?php echo url_for("admin/delete_result.php?id=".$result['Id']);?>" class="w3-button w3-red">Delete</a></td>
                 </tr>
                 <?php } ?>
                 </table>
@@ -162,7 +156,6 @@
        <footer class="w3-container w3-padding-16 w3-light-grey">
            <p>Copyrights Reserved College Road Swimming Club 2023</p>
        </footer>
-
                 <!-- End page content -->
                 </div>
 

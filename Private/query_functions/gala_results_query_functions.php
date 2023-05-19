@@ -50,7 +50,7 @@ function find_all_results() {
 
   $sql = "SELECT gala_results.*,user.full_name,galas.gala_name FROM gala_results,user,galas ";
   $sql .= "ORDER BY Id ASC";
-  echo $sql;
+  //echo $sql;
   $result = mysqli_query($db, $sql);
   confirm_result_set($result);
   return $result;
@@ -63,7 +63,7 @@ function find_results_by_id($id) {
   $sql = "SELECT gala_results.*,user.full_name,galas.gala_name FROM gala_results,user,galas ";
   $sql .= "WHERE gala_results.id='" . db_escape($db, $id) . "'";
   $sql .= "LIMIT 1";
-  // echo $sql;
+  // //echo $sql;
   $result = mysqli_query($db, $sql);
   confirm_result_set($result);
   $user = mysqli_fetch_assoc($result);
@@ -96,7 +96,7 @@ function find_results_by_gala_id_and_stroke($id,$stroke) {
   $sql .= "AND gala_results.stroke='" . db_escape($db, $stroke) . "'";
   $sql .= "AND gala_results.user_id = user.Id AND gala_results.gala_id = galas.Id ORDER BY gala_results.position ASC";
 
-   echo $sql;
+   //echo $sql;
   $result = mysqli_query($db, $sql);
   confirm_result_set($result);
   return $result;

@@ -49,9 +49,9 @@
         </div>
         <div class="w3-bar-block">
     <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-    <a href="<?php echo url_for("admin/performance.php");?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-dashboard"></i>  Performance</a>
-    <a href="<?php echo url_for("admin/users.php");?>" class="w3-bar-item w3-button w3-padding w3-teal"><i class="fa fa-users fa-fw"></i>  Users</a>
-    <a href="<?php echo url_for("admin/galas.php");?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-solid fa-trophy"></i></i>  Galas</a>
+    <a href="<?php echo url_for("parent/performance.php");?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-dashboard"></i>  Performance</a>
+    <a href="<?php echo url_for("parent/children.php");?>" class="w3-bar-item w3-button w3-padding w3-teal"><i class="fa fa-users fa-fw"></i>  Children</a>
+    <a href="<?php echo url_for("parent/galas.php");?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-solid fa-trophy"></i></i>  Galas</a>
   </div>
         </nav>
 
@@ -107,12 +107,12 @@
         
     <div class="w3-container w3-dark-grey w3-padding-32">
        
-       </div>
-   
-       <!-- Footer -->
-       <footer class="w3-container w3-padding-16 w3-light-grey">
-           <p>Copyrights Reserved College Road Swimming Club 2023</p>
-       </footer>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w3-container w3-padding-16 w3-light-grey">
+        <p>Copyrights Reserved College Road Swimming Club 2023</p>
+    </footer>
 
         <!-- End page content -->
         </div>

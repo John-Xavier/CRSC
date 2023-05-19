@@ -1,29 +1,35 @@
 <?php
         require_once('../../private/initialize.php');
         session_start();
-        $user = $_SESSION['user'];
-
-        if(isset($user)){
-
-        }else{
-            echo('session is not set');
-        }
-
-$gala_id = $_GET['id'];
-$gala = find_gala_by_id($gala_id);
-if(is_post_request()) {
-    $gala_id = $_GET['id'];
-    $result = delete_results_with_gala_id($gala_id);
-    if ($result === true){
-        $result  = delete_gala($gala_id);
-        if ($result === true){
-            echo 'gala id:' . $gala_id;
-            echo $result;
-            redirect_to(url_for('/admin/galas.php?'));
-        }
-    }
-   
-}
+        $session_user = $_SESSION['user'];
+        
+        
+          if(is_post_request()) {
+       
+          
+            $user = [];
+            $user['full_name'] = $_POST['full_name'] ?? '';
+            $user['age'] = $_POST['age'] ?? '';
+            $user['role'] = $_POST['role'] ?? 'swimmer';
+            $user['email'] = $_POST['email'] ?? '';
+            $user['phone'] = $_POST['phone'] ?? '';
+            $user['password'] = $_POST['password'] ?? '';
+            $result = insert_child($user,$session_user['Id']);
+            //echo 'result = ' . $result;
+            if($result === true) {
+ 
+             redirect_to(url_for('/parent/children.php'));
+            } else {
+              $errors = $result;
+            }
+          
+          } else {
+          
+           // $user = find_user_by_id($id);
+          
+          }
+          
+          
         ?>
         <!DOCTYPE html>
         <html>
@@ -51,19 +57,18 @@ if(is_post_request()) {
     <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
     <div class="w3-container w3-row">
         <div class="w3-col s8 w3-bar">
-        <span>Welcome, <strong><?php echo $user['full_name'];?></strong></span><br>
+        <span>Welcome, <strong><?php echo $session_user['full_name'];?></strong></span><br>
         </div>
     </div>
     <hr>
     <div class="w3-container">
         <h5>Dashboard</h5>
     </div>
- 
     <div class="w3-bar-block">
     <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-    <a href="<?php echo url_for("admin/performance.php?id=".$user['Id']);?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-dashboard"></i>  Performance</a>
-    <a href="<?php echo url_for("admin/users.php?id=".$user['Id']);?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Users</a>
-    <a href="<?php echo url_for("admin/galas.php?id=".$user['Id']);?>" class="w3-bar-item w3-button w3-padding w3-teal"><i class="fa fa-solid fa-trophy"></i></i>  Galas</a>
+    <a href="<?php echo url_for("parent/performance.php");?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-dashboard"></i>  Performance</a>
+    <a href="<?php echo url_for("parent/children.php");?>" class="w3-bar-item w3-button w3-padding w3-teal"><i class="fa fa-users fa-fw"></i>  Children</a>
+    <a href="<?php echo url_for("parent/galas.php");?>" class="w3-bar-item w3-button w3-padding"><i class="fa fa-solid fa-trophy"></i></i>  Galas</a>
   </div>
     </nav>
 
@@ -76,40 +81,42 @@ if(is_post_request()) {
 
     <!-- Header -->
     <header class="w3-container" style="padding-top:22px">
-        <h5><b><i class="fa fa-trophy"></i> Delete Gala</b></h5>
+        <h5><b><i class="fa fa-user"></i> Add Child</b></h5>
     </header>
 
 
 
-<div class="w3-container">
-
-<div class="w3-card-4">
-
-<header class="w3-container w3-red">
-  <h1>Confirm Delete</h1>
-</header>
-
-<div class="w3-container">
-  <p>Are you sure you wan to delete this gala?</p>
-  <h5><?php echo h($gala['gala_name']); ?></h5>
+<div class="w3-container w3-padding">
+<form action="<?php echo url_for('/parent/add_child.php'); ?>" method="post">
+    <div class="w3-padding">
+<label>Full Name</label>
+<input class="w3-input" name="full_name" type="text">
 </div>
-<form action="<?php echo url_for('/admin/delete_gala.php?id=' . h(u($gala['Id']))); ?>" method="post">
-    <div class = "w3-conatainer w3-padding w3-cell">
-        <input class = "w3-button w3-red" type="submit" name="commit" value="Delete Gala"/>
-</div>
-<div class = "w3-conatainer w3-padding w3-cell">
-<a href="<?php echo url_for("admin/galas.php");?>" class="w3-button w3-teal">Cancel</a>
-</div>
-<footer class="w3-container w3-red">
-  <h5></h5>
-</footer>
+<div class="w3-padding">
 
+<label>Age</label>
+<input class="w3-input" name="age"  type="text">
 </div>
-   
+<div class="w3-padding">
+
+<label>Email</label>
+<input class="w3-input" name="email"  type="text">
+</div>
+<div class="w3-padding">
+
+<label>Phone</label>
+<input class="w3-input" name="phone"  type="text">
+</div>
+
+<div class="w3-padding">
+
+<input class="w3-btn w3-teal" type="submit" value="Submit"/>
+</div>
+
+</form>
 </div>
     
 
-    
 <div class="w3-container w3-dark-grey w3-padding-32">
        
        </div>
@@ -118,6 +125,7 @@ if(is_post_request()) {
        <footer class="w3-container w3-padding-16 w3-light-grey">
            <p>Copyrights Reserved College Road Swimming Club 2023</p>
        </footer>
+
     <!-- End page content -->
     </div>
 
